@@ -1,4 +1,5 @@
-import { setup } from "xstate";
+import { assign, setup } from "xstate";
+import { toggleMachine } from "./toggleMachine";
 
 export const rootMachine = setup({
   types: {
@@ -6,10 +7,22 @@ export const rootMachine = setup({
     events: {} as { type: "spawnToggles" },
   },
   actions: {
-    spawnToggles: () => console.log("message"),
+    spawnToggles: assign(({ context, spawn, self }) => {
+      const blueRef = spawn(toggleMachine, {
+        id: "blue",
+        input: {
+          parent: self,
+          color: "blue",
+        },
+      });
+      return { blueRef };
+    }),
   },
 }).createMachine({
-  context: {},
+  context: ({ input }) => ({
+    color: input?.color,
+    parent: input?.parent,
+  }),
   initial: "ready",
   entry: () => "spawnToggles",
   states: {

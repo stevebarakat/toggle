@@ -1,9 +1,14 @@
+import React from "react";
+import { ToggleContext } from "../machines/toggleMachine";
 import { useMachine } from "@xstate/react";
-import { toggleMachine } from "../machines/toggleMachine";
+import { rootMachine } from "../machines/rootMachine";
 
 function Blue() {
-  const [state, send] = useMachine(toggleMachine);
-  console.log("state", state);
+  const [state] = useMachine(rootMachine);
+  const { send } = ToggleContext.useActorRef();
+  const { context } = ToggleContext.useSelector((s) => s);
+  console.log("context", context);
+  console.log("state.context.blueRef", state.context);
   return <button onClick={() => send({ type: "TOGGLE" })}>Blue</button>;
 }
 

@@ -9,9 +9,9 @@ function App() {
   console.log("state", state);
 
   return (
-    // <ToggleContext.Provider>
-    <Blue />
-    // </ToggleContext.Provider>
+    <ToggleContext.Provider>
+      <Blue />
+    </ToggleContext.Provider>
   );
 }
 

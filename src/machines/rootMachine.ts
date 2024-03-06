@@ -19,10 +19,9 @@ export const rootMachine = setup({
     }),
   },
 }).createMachine({
-  context: ({ input }) => ({
-    color: input?.color,
-    parent: input?.parent,
-  }),
+  context: {
+    blueRef: undefined,
+  },
   initial: "ready",
   entry: () => "spawnToggles",
   states: {
